@@ -17,49 +17,49 @@ const initSocket = (server) => {
         }
     });
 
-    // SOCKETIO.use(async (socket, next) => {
-    //     const token = socket.handshake.auth.token;
-    //     const err = new Error("Token Validation Failed");
-    //     if (!token) {
+    SOCKETIO.use(async (socket, next) => {
+        const token = socket.handshake.auth.token;
+        const err = new Error("Token Validation Failed");
+        if (!token) {
 
-    //         err.data = {
-    //             content: {
-    //                 "result": 0,
-    //                 "errors": [{ "msg": "No token provided" }]
-    //             }
-    //         };
-    //         next(err);
-    //     }
+            err.data = {
+                content: {
+                    "result": 0,
+                    "errors": [{ "msg": "No token provided" }]
+                }
+            };
+            next(err);
+        }
 
-    //     try {
-    //         let decodedVal = await jwt.verify(token, Configuration.app_config.app_secret);
+        try {
+            let decodedVal = await jwt.verify(token, Configuration.app_config.app_secret);
 
-    //         // check weather token is good for user
-    //         let userData = await UserModel.findOne({ _id: decodedVal.user_id })
-    //         if (token == userData.token) {
-    //             socket.user = userData;
-    //             await UserModel.updateOne({ _id: decodedVal.user_id }, { socket_id: socket.id })
-    //             next();
-    //         }
-    //         else {
-    //             err.data = {
-    //                 content: {
-    //                     "result": 3,
-    //                     "errors": [{ "msg": "It seems like you have logged in in another device" }, { "msg": "Session Expired" }]
-    //                 }
-    //             };
-    //             next(err)
-    //         }
-    //     } catch (e) {
-    //         err.data = {
-    //             content: {
-    //                 "result": 3,
-    //                 "errors": [{ "msg": "Invalid Token" }]
-    //             }
-    //         };
-    //         next(err)
-    //     }
-    // });
+            // check weather token is good for user
+            let userData = await UserModel.findOne({ _id: decodedVal.user_id })
+            if (token == userData.token) {
+                socket.user = userData;
+                await UserModel.updateOne({ _id: decodedVal.user_id }, { socket_id: socket.id })
+                next();
+            }
+            else {
+                err.data = {
+                    content: {
+                        "result": 3,
+                        "errors": [{ "msg": "It seems like you have logged in in another device" }, { "msg": "Session Expired" }]
+                    }
+                };
+                next(err)
+            }
+        } catch (e) {
+            err.data = {
+                content: {
+                    "result": 3,
+                    "errors": [{ "msg": "Invalid Token" }]
+                }
+            };
+            next(err)
+        }
+    });
 
     SOCKETIO.on('connection', (socket) => {
 
