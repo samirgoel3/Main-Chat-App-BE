@@ -7,7 +7,7 @@ let app_config = {
 };
 
 let db_config = {
-    server_one: "mongodb+srv://root:f5SyLDiVYl3vWSCn@chat-app-clusture.anejdot.mongodb.net/?retryWrites=true&w=majority"
+    server_one: "mongodb+srv://samir:1234567890@cluster0.pxhc1by.mongodb.net/?retryWrites=true&w=majority"
 }
 
 
