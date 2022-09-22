@@ -1,4 +1,4 @@
-// const apiRoutes = require('./apis');
+const apiRoutes = require('./apis');
 
 
 const initApi = (server) => {
@@ -12,7 +12,7 @@ const initApi = (server) => {
         res.send('Hello , I am Chat App Back End hosted on VERCEL from the new route')
     })
 
-    // server.use('/api', apiRoutes);
+    server.use('/api', apiRoutes);
 
 };
 

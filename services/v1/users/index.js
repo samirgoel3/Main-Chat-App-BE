@@ -3,7 +3,7 @@ const Endpoint = require('../../../utils/constants/Endpointers')
 const UserModel = require('../../../models/model.user')
 const { failureResponse, exceptionResponse, successResponse } = require("../../../utils/response-handlers");
 const JWT = require('jsonwebtoken')
-const Config = require('../../../config/env_config/config')
+const Configuration = require('../../../configuration')
 const { faker } = require('@faker-js/faker');
 const axios = require('axios');
 var FormData = require('form-data');
@@ -64,7 +64,7 @@ create = async (req, res) => {
         });
 
 
-        let token = await JWT.sign({ user_id: createdUser._id }, Config.app.app_secret);
+        let token = await JWT.sign({ user_id: createdUser._id }, Configuration.app_config.app_secret);
         // update token in DB
         await UserModel.findByIdAndUpdate({ _id: createdUser._id }, { token: token })
 
@@ -103,7 +103,7 @@ login = async (req, res) => {
     
     
 
-        let token = await JWT.sign({ user_id: loggedInUser._id }, Config.app.app_secret);
+        let token = await JWT.sign({ user_id: loggedInUser._id }, Configuration.app_config.app_secret);
 
         // update token in DB corresponding to that user
         await UserModel.updateOne({ email: req.body.email }, { token: token })
@@ -123,7 +123,7 @@ verifyEmail = async (req, res) => {
         if (!isEmailExist)
             return failureResponse("" + Endpoint.CHECK_EMAIL_EXIST.name, "Email does not exist in our system ", [], 200, req, res)
 
-        let keyForPassword = await JWT.sign({ email: req.body.email }, Config.app.app_secret, { expiresIn: '3m' })
+        let keyForPassword = await JWT.sign({ email: req.body.email }, Configuration.app_config.app_secret, { expiresIn: '3m' })
 
         return successResponse("" + Endpoint.CHECK_EMAIL_EXIST.name, "Email found successfully", { reset_key: keyForPassword }, 200, req, res)
 
@@ -135,7 +135,7 @@ verifyEmail = async (req, res) => {
 resetPassword = async (req, res) => {
     try {
 
-        let decompiledToken = await JWT.verify(req.body.reset_key, Config.app.app_secret)
+        let decompiledToken = await JWT.verify(req.body.reset_key, Configuration.app_config.app_secret)
         let updateResult = await UserModel.findOneAndUpdate({ email: decompiledToken.email }, { password: req.body.password })
 
         successResponse("" + Endpoint.RESET_PASSWORD.endpoint, "Password updated successfully", [], 200, req, res);

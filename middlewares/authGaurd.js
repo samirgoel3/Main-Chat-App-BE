@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const Config = require('../config/env_config/config')
+const Configuration = require('../configuration')
 const UserModel = require('../models/model.user')
 
 const authenticateClientToken = async (req, res, next) => {
@@ -14,7 +14,7 @@ const authenticateClientToken = async (req, res, next) => {
     }
 
     try {
-        let decodedVal = await jwt.verify(token, Config.app.app_secret);
+        let decodedVal = await jwt.verify(token, Configuration.app_config.app_secret);
 
         // check weather token is good for user
         let userData = await UserModel.findOne({ _id: decodedVal.user_id })
