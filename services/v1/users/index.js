@@ -43,7 +43,7 @@ create = async (req, res) => {
             formData.append("type", 'profile');
 
             // Execution for api Call
-            let response = await axios.post('http://43.205.208.192:3001/api/v1/upload/image', formData, fileName);
+            let response = await axios.post('http://13.126.21.229:3001/api/v1/upload/image', formData, fileName);
 
             // after post request remove local image to clear up space
             await fsPromises.unlink(imagePath);
@@ -98,8 +98,8 @@ login = async (req, res) => {
             return failureResponse("" + Endpoint.LOGIN_USER.name, "User does not exist ", [], 200, req, res)
 
 
-            // var socketio = req.app.get('socketio');
-            // socketio.emit(""+loggedInUser.socket_id, {type:"LOGOUT", data:"It Seems that you are logged in another device."})
+            var socketio = req.app.get('socketio');
+            socketio.emit(""+loggedInUser.socket_id, {type:"LOGOUT", data:"It Seems that you are logged in another device."})
     
     
 
