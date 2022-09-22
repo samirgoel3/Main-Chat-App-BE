@@ -9,7 +9,7 @@ const KEYS = require('../socket/SocketKeys')
 
 const initSocket = (server) => {
     let SOCKETIO = new Server(server, {
-        pingTimeout: 60000,
+        pingTimeout: 600000,
         cors: {
             // origin: 'http://192.168.0.109:5000',
             methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
