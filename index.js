@@ -46,8 +46,8 @@ mongoose.connect(configuration.db_config.server_one, {
 
 
 mainServer = http.createServer(ApiServerApp)
-// let SOCKETIO = socketRoute.initSocket(mainServer)
-// ApiServerApp.set('socketio',SOCKETIO);
+let SOCKETIO = socketRoute.initSocket(mainServer)
+ApiServerApp.set('socketio',SOCKETIO);
 route.initApi(ApiServerApp)
 
 
