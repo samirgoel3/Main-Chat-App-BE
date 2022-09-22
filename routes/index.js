@@ -16,7 +16,6 @@ const initApi = (server) => {
 
 };
 
-
 module.exports = {
     initApi: initApi,
 };
