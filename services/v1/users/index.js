@@ -98,8 +98,8 @@ login = async (req, res) => {
             return failureResponse("" + Endpoint.LOGIN_USER.name, "User does not exist ", [], 200, req, res)
 
 
-            var socketio = req.app.get('socketio');
-            socketio.emit(""+loggedInUser.socket_id, {type:"LOGOUT", data:"It Seems that you are logged in another device."})
+            // var socketio = req.app.get('socketio');
+            // socketio.emit(""+loggedInUser.socket_id, {type:"LOGOUT", data:"It Seems that you are logged in another device."})
     
     
 
