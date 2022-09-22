@@ -1,0 +1,16 @@
+module.exports ={
+    EMAIL:"email",
+    USERNAME:"username",
+    PASSWORD:"password",
+    IMAGE:"image",
+    RESET_TOKEN : "reset_key",
+    DEVELOPER:"developer",
+    CONTENT:"content",
+    CHAT:"chat",
+    CHAT_NAME:"chatname",
+    USERS:"users",
+    USER_ID_TO_CHAT:"user_id_to_chat",
+    GROUPADMIN:"groupadmin",
+    MESSAGE_ID:"message_id",
+    KEY:"key",
+}

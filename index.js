@@ -2,8 +2,8 @@ const configuration = require('./configuration')
 const express = require('express');
 const http = require('http');
 const fileUpload = require('express-fileupload')
-// const route = require('./routes')
-// const socketRoute = require('./routes/socket')
+const route = require('./routes')
+const socketRoute = require('./routes/socket')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -46,15 +46,9 @@ mongoose.connect(configuration.db_config.server_one, {
 
 
 mainServer = http.createServer(ApiServerApp)
-// let SOCKETIO = socketRoute.initSocket(mainServer)
-// ApiServerApp.set('socketio',SOCKETIO);
-// route.initApi(ApiServerApp)
-
-
-
-ApiServerApp.use('/', (req, res) => {
-    res.send('Hello , I am Chat App Back End hosted on VERCEL')
-})
+let SOCKETIO = socketRoute.initSocket(mainServer)
+ApiServerApp.set('socketio',SOCKETIO);
+route.initApi(ApiServerApp)
 
 
 
